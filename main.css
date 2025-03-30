@@ -1,0 +1,33 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 60px;
+}
+.filters {
+    display: flex;
+}
+.filters select {
+    margin: 0px 30px;
+    width: 300px;
+    height: 30px;
+    border-radius: 8px;
+    border: 2px solid rgb(31, 31, 31);
+}
+.products {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+.products__product {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 8px;
+    padding: 20px 20px;
+}
