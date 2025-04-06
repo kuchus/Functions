@@ -19,15 +19,16 @@ body {
     border-radius: 8px;
     border: 2px solid rgb(31, 31, 31);
 }
-.products {
+.products, .search-products__found-product {
     display: flex;
     justify-content: space-between;
     margin-top: 40px;
 }
-.products__product {
+.products__product, .search-products__product {
     display: flex;
     flex-direction: column;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 8px;
     padding: 20px 20px;
+    max-width: 400px;
 }
