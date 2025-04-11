@@ -26,6 +26,52 @@ function listProduct (products) {
     })
 }
 
+function updateVisibleProducts() {
+    let visibleProducts = products.slice()
+
+    if(selectCategory.value == "smartphones") {
+        visibleProducts = visibleProducts.filter((product) => product.category == "Смартфоны")
+    }
+    else if(selectCategory.value == "laptops") {
+        visibleProducts = visibleProducts.filter((product) => product.category == "Ноутбуки")
+    }
+    else if(selectCategory.value == "accessories") {
+        visibleProducts = visibleProducts.filter((product) => product.category == "Аксессуары")
+    }
+
+    if(selectSort.value == "cheap") {
+        visibleProducts.sort((product1,product2) => product1.price - product2.price)
+    }
+    else if(selectSort.value == "dear") {
+        visibleProducts.sort((product1,product2) => product2.price - product1.price)
+    }
+
+    listProduct(visibleProducts)
+}
+
+function genereteFindProduct(findProduct) {
+    const blockProduct = document.createElement("div")
+    blockProduct.className = "search-products__product"
+    const id = document.createElement("span")
+    id.textContent = `Id: ${findProduct.id}`
+    const name = document.createElement("h3")
+    name.textContent = `${findProduct.name}`
+    const price = document.createElement("span")
+    price.textContent = `${findProduct.price}`
+    const category = document.createElement("span")
+    category.textContent = `Категория: ${findProduct.category}`
+    const description = document.createElement("p")
+    description.textContent = `О товаре: ${findProduct.description}`
+    
+    blockProduct.append(id)
+    blockProduct.append(name)
+    blockProduct.append(price)
+    blockProduct.append(category)
+    blockProduct.append(description)
+
+    return blockProduct
+}
+
 const selectCategory = document.querySelector(".category")
 const selectSort = document.querySelector(".sort")
 
@@ -36,35 +82,10 @@ const products = [
     { id: 4, name: "Samsung Galaxy S23", price: 899, category: "Смартфоны",description: "придумай сам" },
     { id: 5, name: "Asus ROG", price: 1599, category: "Ноутбуки",description: "придумай сам" }
 ];
-listProduct(products)   
+listProduct(products)
+selectCategory.onchange = updateVisibleProducts
+selectSort.onchange = updateVisibleProducts   
 
-selectCategory.onchange = () => {
-    if(selectCategory.value == "all") {
-        listProduct(products)    
-    }
-    else if(selectCategory.value == "smartphones") {
-        listProduct(products.filter((product) => product.category == "Смартфоны"))
-    }
-    else if(selectCategory.value == "laptops") {
-        listProduct(products.filter((product) => product.category == "Ноутбуки")  )            
-    }
-    else if(selectCategory.value == "accessories") {
-        listProduct(products.filter((product) => product.category == "Аксессуары")  )    
-    }
-    
-}
-
-selectSort.onchange = () => {
-    if(selectSort.value == "stock") {
-        listProduct(products)
-    }
-    else if(selectSort.value == "cheap") {
-        listProduct(products.sort((product1,product2) => product1.price - product2.price))
-    }
-    else if(selectSort.value == "dear") {
-        listProduct(products.sort((product1,product2) => product2.price - product1.price))
-    }
-}
 
 const blockSearch = document.createElement("div")
 blockSearch.className = "search-products"
@@ -94,26 +115,9 @@ document.body.append(blockSearch)
 
 buttonSearch.onclick = () => {
     foundProduct.innerHTML = ""
-    if(products.find((product) => product.id == input.value)) {
-        const blockProduct = document.createElement("div")
-        blockProduct.className = "search-products__product"
-        const id = document.createElement("span")
-        id.textContent = `Id: ${products[Number(input.value) - 1].id}`
-        const name = document.createElement("h3")
-        name.textContent = `${products[Number(input.value) - 1].name}`
-        const price = document.createElement("span")
-        price.textContent = `${products[Number(input.value) - 1].price}`
-        const category = document.createElement("span")
-        category.textContent = `Категория: ${products[Number(input.value) - 1].category}`
-        const description = document.createElement("p")
-        description.textContent = `О товаре: ${products[Number(input.value) - 1].description}`
-        
-        blockProduct.append(id)
-        blockProduct.append(name)
-        blockProduct.append(price)
-        blockProduct.append(category)
-        blockProduct.append(description)
-        
+    const findProduct = products.find((product) => product.id == input.value)
+    if(findProduct) {
+        const blockProduct = genereteFindProduct(findProduct)
         document.querySelector('.search-products__found-product').append(blockProduct)
     } else {
         const answer = document.createElement("h3")
